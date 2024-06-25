@@ -5,7 +5,36 @@ from django.contrib import messages
 from account.forms import *
 
 def user_login(request):
-    return render(request, 'auth/login.html')
+    if request.method == 'POST':
+        form = UserLoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, email=email, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Login successful.')
+                return redirect('auth:dashboard')
+            else:
+                error_message = 'Invalid email or password'
+                for field, errors in form.errors.items():
+                    error_message += f"{field}: {', '.join(errors)}. "
+                messages.error(request, error_message.strip())
+                return redirect('auth:dashboard')
+        else:
+            error_message = 'Login failed. Please check your input.'
+            for field, errors in form.errors.items():
+                error_message += f"{field}: {', '.join(errors)}. "
+            messages.error(request, error_message.strip())
+            return redirect('auth:dashboard')
+    else:
+        form = UserLoginForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'auth/login.html', context)
 
 def user_register(request):
     if request.method == 'POST':
@@ -35,3 +64,6 @@ def user_register(request):
     }
 
     return render(request, 'auth/register.html', context)
+
+def dashboard(request):
+    return render(request, 'auth/dashboard.html')
