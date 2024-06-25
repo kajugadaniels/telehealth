@@ -17,11 +17,17 @@ def user_image_path(instance, filename):
     return f'users/{slugify(instance.name)}_{instance.role}_{instance.gender}_{instance.id_number}{file_extension}'
 
 class User(AbstractUser):
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+    
     name = models.CharField(max_length=255)
     username = models.SlugField(unique=True, blank=True)
     email = models.CharField(max_length=30, unique=True, blank=True, null=True)
     phone_number = models.CharField(max_length=20, unique=True, null=True, blank=True)
     id_number = models.CharField(unique=True, max_length=20, null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, null=True, blank=True)
     image = ProcessedImageField(
         upload_to=user_image_path,
         processors=[ResizeToFill(720, 720)],
@@ -31,9 +37,10 @@ class User(AbstractUser):
         blank=True,
     )
     role = models.ForeignKey('Role', on_delete=models.SET_NULL, null=True, blank=True)
+    status = models.BooleanField(default=False)
     password = models.CharField(max_length=255)
     created_at = models.DateTimeField(default=timezone.now)
-    
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name', 'role']
     

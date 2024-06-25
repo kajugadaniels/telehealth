@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Mofi admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
+    <meta name="keywords"
+        content="admin template, Mofi admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="author" content="pixelstrap">
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    <title>TeleHealth - Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vendors/icofont.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vendors/themify.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vendors/flag-icon.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vendors/feather-icon.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/vendors/bootstrap.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+</head>
+
+<body>
+    <div class="container-fluid p-0"> 
+        <div class="row m-0">
+            <div class="col-12 p-0">    
+                <div class="login-card login-dark">
+                    <div>
+                        <div>
+                            <a class="logo" href="#">
+                                TeleHealth
+                            </a>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == 'success' %}
+                                        <div class="alert alert-success">
+                                            {{ message }}
+                                        </div>
+                                    {% elif message.tags == 'error' %}
+                                        <div class="alert alert-danger">
+                                            {{ message }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+
+                        </div>
+                        <div class="login-main"> 
+                            <form class="theme-form" method="POST">
+                                {% csrf_token %}
+                                <h4>Create your account</h4>
+                                <p>Enter your personal details to create account</p>
+                                <div class="form-group">
+                                    <div class="row g-2">
+                                        <div class="col-12">
+                                            <label class="col-form-label pt-0">Name</label>
+                                            {{ form.name }}
+                                            {% if form.name.errors %}
+                                                <div class="text-danger">{{ form.name.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="col-form-label pt-0">Phone Number</label>
+                                            {{ form.phone_number }}
+                                            {% if form.phone_number.errors %}
+                                                <div class="text-danger">{{ form.phone_number.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="col-form-label pt-0">Email</label>
+                                            {{ form.email }}
+                                            {% if form.email.errors %}
+                                                <div class="text-danger">{{ form.email.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="col-form-label pt-0">ID Number</label>
+                                            {{ form.id_number }}
+                                            {% if form.id_number.errors %}
+                                                <div class="text-danger">{{ form.id_number.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="col-form-label pt-0">Gender</label>
+                                            {{ form.gender }}
+                                            {% if form.gender.errors %}
+                                                <div class="text-danger">{{ form.gender.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="col-form-label pt-0">Image</label>
+                                            {{ form.image }}
+                                            {% if form.image.errors %}
+                                                <div class="text-danger">{{ form.image.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="col-form-label pt-0">Role</label>
+                                            {{ form.role }}
+                                            {% if form.role.errors %}
+                                                <div class="text-danger">{{ form.role.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <label class="col-form-label pt-0">Password</label>
+                                            <input type="password" name="password1" placeholder="Enter Password" class="form-control">
+                                            {% if form.password1.errors %}
+                                                <div class="text-danger">{{ form.password1.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="col-form-label pt-0">Password Confirmation</label>
+                                            <input type="password" name="password2" placeholder="Enter Password Confirmation" class="form-control">
+                                            {% if form.confirm_password2.errors %}
+                                                <div class="text-danger">{{ form.confirm_password2.errors }}</div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <button class="btn btn-primary btn-block w-100" type="submit" style="height: 50px;">Create Account</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/icons/feather-icon/feather.min.js' %}"></script>
+    <script src="{% static 'js/icons/feather-icon/feather-icon.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>
