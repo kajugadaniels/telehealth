@@ -1,1 +1,10 @@
-Welcome
+<li>
+    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <i data-feather="log-out"></i>
+        <span>Log out</span>
+    </a>
+</li>
+
+<form id="logout-form" action="{% url 'auth:logout' %}" method="POST" class="d-none">
+    {% csrf_token %}
+</form>
