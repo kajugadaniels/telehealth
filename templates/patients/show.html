@@ -8,22 +8,24 @@
             <div class="col-xxl-4 col-md-6 box-col-6">
             <div class="card">
                 <div class="card-body">
-                <div class="product-slider owl-carousel owl-theme" id="sync1">
-                    <div class="item">
-                        {% if patient.image %}
-                            <img src="{{ patient.image.url }}" alt="{{ patient.name }}">
-                        {% else %}
-                            <img src="{% static 'images/not-found.jpg' %}" alt="{{ patient.name }}">
-                        {% endif %}
+                    <div class="product-slider owl-carousel owl-theme" id="sync1">
+                        <div class="item">
+                            {% if patient.image %}
+                                <img src="{{ patient.image.url }}" alt="{{ patient.name }}">
+                            {% else %}
+                                <img src="{% static 'images/not-found.jpg' %}" alt="{{ patient.name }}">
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-                </div>
             </div>
             </div>
-            <div class="col-xxl-5 box-col-6 order-xxl-0 order-1">
+            <div class="col-xxl-4 box-col-6 order-xxl-0 order-1">
                 <div class="card">
                     <div class="card-body">
                         <div class="product-page-details">
+                            <h5>Patient</h5>
+                            <hr>
                             <h3 class="f-w-600">
                                 {{ patient.name }}
                             </h3>
@@ -114,54 +116,98 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xxl-3 col-md-6 box-col-12">
+            <div class="col-xxl-4 box-col-6 order-xxl-0">
                 <div class="card">
                     <div class="card-body">
-                        <div class="filter-block">
-                            <h4>Close Relative</h4>
-                            <ul>
-                                <li>
-                                    <b>Relationship: </b>
-                                    {{ patient.relationship }}
-                                </li>
-                                <li>
-                                    <b>Name: </b>
-                                    {{ patient.relative_name }}
-                                </li>
-                                <li>
-                                    <b>ID Number: </b>
-                                    {{ patient.relative_id_number }}
-                                </li>
-                                <li>
-                                    <b>Phone Number: </b>
-                                    {{ patient.relative_phone_number }}
-                                </li>
-                            </ul>
+                        <div class="product-page-details">
+                            <h5>Next of KIN</h5>
+                            <hr>
+                            <h3 class="f-w-600">
+                                {{ relative.name }}
+                            </h3>
                         </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="filter-block">
-                            <h4>Relative Address</h4>
-                            <ul>
-                                <li>
-                                    <b>Province: </b>
-                                    {{ patient.relative_province }}
-                                </li>
-                                <li>
-                                    <b>District: </b>
-                                    {{ patient.relative_district }}
-                                </li>
-                                <li>
-                                    <b>Cell: </b>
-                                    {{ patient.relative_cell }}
-                                </li>
-                                <li>
-                                    <b>Village: </b>
-                                    {{ patient.relative_village }}
-                                </li>
-                            </ul>
+                        <div class="product-price">
+                            {{ relative.mrn }}
+                        </div>
+                        <hr>
+                        <div>
+                            <table class="product-page-width">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <b>Gender &nbsp;&nbsp;&nbsp;:</b>
+                                        </td>
+                                        <td>{{ relative.gender }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Marital Status &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{ relative.marital_status }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Nationality &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{ relative.nationality }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>DOB &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{relative.dob}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>ID Number &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{relative.id_number}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Phone Number &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{relative.phone_number}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <table class="product-page-width">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <b>Province &nbsp;&nbsp;&nbsp;:</b>
+                                        </td>
+                                        <td>{{ relative.province }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>District &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{ relative.district }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Sector &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{ relative.sector }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Cell &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{relative.cell}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Village &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{relative.village}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

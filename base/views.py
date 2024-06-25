@@ -48,9 +48,11 @@ def addPatient(request):
 @login_required
 def getPatient(request, slug):
     patient = get_object_or_404(Patient, slug=slug)
+    relative = patient.relative
     
     context = {
-        'patient': patient
+        'patient': patient,
+        'relative': relative
     }
     
     return render(request, 'patients/show.html', context)
