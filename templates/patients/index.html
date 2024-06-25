@@ -42,7 +42,11 @@
                                             <td> 
                                                 <div class="product-names">
                                                     <div class="light-product-box">
-                                                        <img class="img-fluid" src="{{ patient.image.url }}" alt="{{ patient.name }}">
+                                                        {% if patient.image %}
+                                                            <img class="img-fluid" src="{{ patient.image.url }}" alt="{{ patient.name }}">
+                                                        {% else %}
+                                                            <img class="img-fluid" src="{% static 'images/not-found.jpg' %}" alt="{{ patient.name }}">
+                                                        {% endif %}
                                                     </div>
                                                     <p>{{ patient.name }}</p>
                                                 </div>
