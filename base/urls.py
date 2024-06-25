@@ -10,7 +10,7 @@ urlpatterns = [
 
     path('patients', getPatients, name='getPatients'),
     path('patient/add', addPatient, name='addPatient'),
-    path('patient/<mrn>', getPatient, name='getPatient'),
-    path('patient/<mrn>/edit', editPatient, name='editPatient'),
-    path('patient/<mrn>/delete', deletePatient, name='deletePatient'),
+    path('patient/<slug>', getPatient, name='getPatient'),
+    path('patient/<slug>/edit', editPatient, name='editPatient'),
+    path('patient/<slug>/delete', deletePatient, name='deletePatient'),
 ]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

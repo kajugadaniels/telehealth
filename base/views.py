@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from base.models import *
 
 @login_required
@@ -21,13 +21,19 @@ def addPatient(request):
     pass
 
 @login_required
-def getPatient(request, mrn):
+def getPatient(request, slug):
+    patient = get_object_or_404(Patient, slug=slug)
+    
+    context = {
+        'patient': patient
+    }
+    
+    return render(request, 'patients/show.html', context)
+
+@login_required
+def editPatient(request, slug):
     pass
 
 @login_required
-def editPatient(request, mrn):
-    pass
-
-@login_required
-def deletePatient(request, mrn):
+def deletePatient(request, slug):
     pass

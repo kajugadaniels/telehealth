@@ -1,0 +1,189 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div>
+        <div class="row product-page-main p-0">
+            <div class="col-xxl-4 col-md-6 box-col-6">
+            <div class="card">
+                <div class="card-body">
+                <div class="product-slider owl-carousel owl-theme" id="sync1">
+                    <div class="item">
+                        {% if patient.image %}
+                            <img src="{{ patient.image.url }}" alt="{{ patient.name }}">
+                        {% else %}
+                            <img src="{% static 'images/not-found.jpg' %}" alt="{{ patient.name }}">
+                        {% endif %}
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div class="col-xxl-5 box-col-6 order-xxl-0 order-1">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="product-page-details">
+                            <h3 class="f-w-600">
+                                {{ patient.name }}
+                            </h3>
+                        </div>
+                        <div class="product-price">
+                            {{ patient.mrn }}
+                        </div>
+                        <hr>
+                        <div>
+                            <table class="product-page-width">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <b>Gender &nbsp;&nbsp;&nbsp;:</b>
+                                        </td>
+                                        <td>{{ patient.gender }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Marital Status &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{ patient.marital_status }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Nationality &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{ patient.nationality }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>DOB &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{patient.dob}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>ID Number &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{patient.id_number}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Phone Number &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{patient.phone_number}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <table class="product-page-width">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <b>Province &nbsp;&nbsp;&nbsp;:</b>
+                                        </td>
+                                        <td>{{ patient.province }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>District &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{ patient.district }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Sector &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{ patient.sector }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Cell &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{patient.cell}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <b>Village &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                        </td>
+                                        <td>{{patient.village}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-3 col-md-6 box-col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="filter-block">
+                            <h4>Close Relative</h4>
+                            <ul>
+                                <li>
+                                    <b>Relationship: </b>
+                                    {{ patient.relationship }}
+                                </li>
+                                <li>
+                                    <b>Name: </b>
+                                    {{ patient.relative_name }}
+                                </li>
+                                <li>
+                                    <b>ID Number: </b>
+                                    {{ patient.relative_id_number }}
+                                </li>
+                                <li>
+                                    <b>Phone Number: </b>
+                                    {{ patient.relative_phone_number }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="filter-block">
+                            <h4>Relative Address</h4>
+                            <ul>
+                                <li>
+                                    <b>Province: </b>
+                                    {{ patient.relative_province }}
+                                </li>
+                                <li>
+                                    <b>District: </b>
+                                    {{ patient.relative_district }}
+                                </li>
+                                <li>
+                                    <b>Cell: </b>
+                                    {{ patient.relative_cell }}
+                                </li>
+                                <li>
+                                    <b>Village: </b>
+                                    {{ patient.relative_village }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="row product-page-main">
+            <div class="col-sm-12">
+                <ul class="nav nav-tabs border-tab nav-primary mb-0" id="top-tab" role="tablist">
+                    <li class="nav-item"><a class="nav-link active" id="top-home-tab" data-bs-toggle="tab" href="#top-home" role="tab" aria-controls="top-home" aria-selected="false">Medical Records</a>
+                        <div class="material-border"></div>
+                    </li>
+                </ul>
+                <div class="tab-content" id="top-tabContent">
+                    <div class="tab-pane fade active show" id="top-home" role="tabpanel" aria-labelledby="top-home-tab">
+                        Medical Record
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
