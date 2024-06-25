@@ -1,0 +1,30 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="list-product-header">
+                        <div class="d-flex justify-content-between">
+                            <h4>Add Patient</h4>
+                            <a class="btn btn-primary" href="{% url 'base:getPatients' %}"><i class="fa fa-eye"></i>View Patients</a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form theme-form">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" class="btn btn-primary">Add Patient</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

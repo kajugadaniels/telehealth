@@ -6,15 +6,22 @@ from django.core.management.base import BaseCommand
 from base.models import Patient
 
 class Command(BaseCommand):
-    help = 'Generate 50 fake patients'
+    help = 'Generate 100 fake patients'
 
     def handle(self, *args, **kwargs):
         faker = Faker()
-        genders = ['male', 'female', 'other']
-        marital_statuses = ['single', 'married', 'divorced', 'widowed']
-        nationalities = ['Rwandan', 'other']
+        genders = ['Male', 'Female']
+        marital_statuses = ['Single', 'Married', 'Widowed', 'Divorced']
+        nationalities = ['Rwandan', 'Other']
+        relationships = ['Husband', 'Wife', 'Sibling', 'Friend', 'Other Family Member']
 
-        for _ in range(50):
+        def generate_unique_mrn():
+            while True:
+                mrn = 'MRN-' + ''.join(random.choices(string.digits, k=7))
+                if not Patient.objects.filter(mrn=mrn).exists():
+                    return mrn
+
+        for _ in range(100):
             name = faker.name()
             dob = faker.date_of_birth(minimum_age=0, maximum_age=100)
             gender = random.choice(genders)
@@ -27,15 +34,9 @@ class Command(BaseCommand):
             cell = faker.street_name()
             village = faker.street_name()
             phone_number = faker.unique.phone_number()
-            relative_name = faker.name()
-            relative_id_number = faker.random_number(digits=10)
-            relationship = faker.word()
-            relative_province = faker.state()
-            relative_district = faker.city()
-            relative_sector = faker.city()
-            relative_cell = faker.street_name()
-            relative_village = faker.street_name()
-            relative_phone_number = faker.phone_number()
+
+            # Generate unique MRN
+            mrn = generate_unique_mrn()
 
             patient = Patient(
                 name=name,
@@ -50,17 +51,20 @@ class Command(BaseCommand):
                 cell=cell,
                 village=village,
                 phone_number=phone_number,
-                relative_name=relative_name,
-                relative_id_number=relative_id_number,
-                relationship=relationship,
-                relative_province=relative_province,
-                relative_district=relative_district,
-                relative_sector=relative_sector,
-                relative_cell=relative_cell,
-                relative_village=relative_village,
-                relative_phone_number=relative_phone_number,
+                mrn=mrn,
             )
 
             patient.save()
 
-        self.stdout.write(self.style.SUCCESS('Successfully created 50 fake patients'))
+        # Assign relationships to 25% of the patients
+        all_patients = list(Patient.objects.all())
+        for patient in all_patients:
+            if random.random() < 0.25:
+                relative = random.choice(all_patients)
+                while relative == patient:
+                    relative = random.choice(all_patients)
+                patient.relative = relative
+                patient.relationship = random.choice(relationships)
+                patient.save()
+
+        self.stdout.write(self.style.SUCCESS('Successfully created 100 fake patients'))

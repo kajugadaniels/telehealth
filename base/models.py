@@ -1,12 +1,12 @@
 import os
+import random
+import string
 from django.db import models
 from datetime import date
 from django.utils import timezone
 from django.utils.text import slugify
 from imagekit.processors import ResizeToFill
 from imagekit.models import ProcessedImageField
-import random
-import string
 
 def patient_image_path(instance, filename):
     base_filename, file_extension = os.path.splitext(filename)
@@ -14,20 +14,28 @@ def patient_image_path(instance, filename):
 
 class Patient(models.Model):
     GENDER_CHOICES = [
-        ('male', 'Male'),
-        ('female', 'Female'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
     ]
 
     MARITAL_STATUS_CHOICES = [
-        ('single', 'Single'),
-        ('married', 'Married'),
-        ('divorced', 'Divorced'),
-        ('widowed', 'Widowed'),
+        ('Single', 'Single'),
+        ('Married', 'Married'),
+        ('Widowed', 'Widowed'),
+        ('Divorced', 'Divorced'),
     ]
 
     NATIONALITY_CHOICES = [
         ('Rwandan', 'Rwandan'),
-        ('other', 'Other'),
+        ('Other', 'Other'),
+    ]
+
+    RELATIONSHIP_CHOICES = [
+        ('Husband', 'Husband'),
+        ('Wife', 'Wife'),
+        ('Sibling', 'Sibling'),
+        ('Friend', 'Friend'),
+        ('Other Family Member', 'Other Family Member'),
     ]
 
     mrn = models.CharField(max_length=10, unique=True, blank=True)
@@ -52,15 +60,8 @@ class Patient(models.Model):
     cell = models.CharField(max_length=50, null=True, blank=True)
     village = models.CharField(max_length=50, null=True, blank=True)
     phone_number = models.CharField(max_length=15, unique=True, null=True, blank=True)
-    relative_name = models.CharField(max_length=255, null=True, blank=True)
-    relative_id_number = models.CharField(max_length=50, null=True, blank=True)
-    relationship = models.CharField(max_length=50, null=True, blank=True)
-    relative_province = models.CharField(max_length=50, null=True, blank=True)
-    relative_district = models.CharField(max_length=50, null=True, blank=True)
-    relative_sector = models.CharField(max_length=50, null=True, blank=True)
-    relative_cell = models.CharField(max_length=50, null=True, blank=True)
-    relative_village = models.CharField(max_length=50, null=True, blank=True)
-    relative_phone_number = models.CharField(max_length=15, null=True, blank=True)
+    relationship = models.CharField(max_length=50, choices=RELATIONSHIP_CHOICES, null=True, blank=True)
+    relative = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='relatives')
     created_at = models.DateTimeField(default=timezone.now)
 
     @property
@@ -72,7 +73,7 @@ class Patient(models.Model):
 
     def generate_mrn(self):
         while True:
-            mrn = 'MRN-' + ''.join(random.choices(string.digits, k=7))
+            mrn = 'MRN-' + ''.join(random.choices(string.digits, k=10))
             if not Patient.objects.filter(mrn=mrn).exists():
                 return mrn
 
