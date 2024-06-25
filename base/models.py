@@ -5,16 +5,17 @@ from django.utils import timezone
 from django.utils.text import slugify
 from imagekit.processors import ResizeToFill
 from imagekit.models import ProcessedImageField
+import random
+import string
 
 def patient_image_path(instance, filename):
     base_filename, file_extension = os.path.splitext(filename)
-    return f'patient/{slugify(instance.name)}_{instance.dob}_{instance.gender}_{instance.id_number}{file_extension}'
+    return f'patients/{slugify(instance.name)}_{instance.dob}_{instance.gender}_{instance.id_number}{file_extension}'
 
 class Patient(models.Model):
     GENDER_CHOICES = [
         ('male', 'Male'),
         ('female', 'Female'),
-        ('other', 'Other'),
     ]
 
     MARITAL_STATUS_CHOICES = [
@@ -29,8 +30,9 @@ class Patient(models.Model):
         ('other', 'Other'),
     ]
 
-    mrn = models.SlugField(max_length=255, unique=True, blank=True)
+    mrn = models.CharField(max_length=10, unique=True, blank=True)
     name = models.CharField(max_length=255, null=True, blank=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
     dob = models.DateField(null=True, blank=True)
     image = ProcessedImageField(
         upload_to=patient_image_path,
@@ -68,9 +70,17 @@ class Patient(models.Model):
             return today.year - self.dob.year - ((today.month, today.day) < (self.dob.month, self.dob.day))
         return None
 
+    def generate_mrn(self):
+        while True:
+            mrn = 'MRN-' + ''.join(random.choices(string.digits, k=7))
+            if not Patient.objects.filter(mrn=mrn).exists():
+                return mrn
+
     def save(self, *args, **kwargs):
-        if not self.mrn and self.name and self.dob and self.gender and self.id_number:
-            self.mrn = slugify(f'mrn-{self.name}-{self.dob}-{self.gender}-{self.id_number}')
+        if not self.mrn:
+            self.mrn = self.generate_mrn()
+        if not self.slug and self.name and self.dob and self.gender and self.id_number:
+            self.slug = slugify(f'{self.name}-{self.dob}-{self.gender}-{self.id_number}')
         super().save(*args, **kwargs)
 
     class Meta:

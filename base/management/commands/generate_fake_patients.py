@@ -1,20 +1,19 @@
-import os
 import random
-from datetime import datetime
+import string
+from datetime import date, timedelta
 from faker import Faker
 from django.core.management.base import BaseCommand
-from django.utils.text import slugify
 from base.models import Patient
 
 class Command(BaseCommand):
-    help = 'Generate fake patients'
+    help = 'Generate 50 fake patients'
 
     def handle(self, *args, **kwargs):
         faker = Faker()
         genders = ['male', 'female', 'other']
         marital_statuses = ['single', 'married', 'divorced', 'widowed']
         nationalities = ['Rwandan', 'other']
-        
+
         for _ in range(50):
             name = faker.name()
             dob = faker.date_of_birth(minimum_age=0, maximum_age=100)
@@ -37,7 +36,7 @@ class Command(BaseCommand):
             relative_cell = faker.street_name()
             relative_village = faker.street_name()
             relative_phone_number = faker.phone_number()
-            
+
             patient = Patient(
                 name=name,
                 dob=dob,
@@ -61,10 +60,7 @@ class Command(BaseCommand):
                 relative_village=relative_village,
                 relative_phone_number=relative_phone_number,
             )
-            
-            # Generate mrn slug
-            patient.mrn = slugify(f'mrn-{name}-{dob}-{gender}-{id_number}')
-            
+
             patient.save()
-        
+
         self.stdout.write(self.style.SUCCESS('Successfully created 50 fake patients'))
