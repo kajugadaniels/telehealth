@@ -15,10 +15,132 @@
                     </div>
                     <hr>
                     <div class="form theme-form">
-                        <form method="post" enctype="multipart/form-data">
+                        <form class="price-wrapper" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary">Add Patient</button>
+                            <div class="row g-3 custom-input mb-5">
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Name</label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}
+                                        <div class="text-danger">{{ form.name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">ID Number</label>
+                                    {{ form.id_number }}
+                                    {% if form.id_number.errors %}
+                                        <div class="text-danger">{{ form.id_number.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Image</label>
+                                    {{ form.image }}
+                                    {% if form.image.errors %}
+                                        <div class="text-danger">{{ form.image.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row g-3 custom-input mb-5">
+                                <div class="col-sm-3"> 
+                                    <label class="form-label">Phone Number</label>
+                                    {{ form.phone_number }}
+                                    {% if form.phone_number.errors %}
+                                        <div class="text-danger">{{ form.phone_number.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-3"> 
+                                    <label class="form-label">DOB</label>
+                                    {{ form.dob }}
+                                    {% if form.dob.errors %}
+                                        <div class="text-danger">{{ form.dob.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-3"> 
+                                    <label class="form-label">Gender</label>
+                                    {{ form.gender }}
+                                    {% if form.gender.errors %}
+                                        <div class="text-danger">{{ form.gender.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Marital Status</label>
+                                    {{ form.marital_status }}
+                                    {% if form.marital_status.errors %}
+                                        <div class="text-danger">{{ form.marital_status.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row g-3 custom-input mb-5">
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Nationality</label>
+                                    {{ form.nationality }}
+                                    {% if form.nationality.errors %}
+                                        <div class="text-danger">{{ form.nationality.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Province</label>
+                                    {{ form.province }}
+                                    {% if form.province.errors %}
+                                        <div class="text-danger">{{ form.province.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">District</label>
+                                    {{ form.district }}
+                                    {% if form.district.errors %}
+                                        <div class="text-danger">{{ form.district.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row g-3 custom-input mb-5">
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Sector</label>
+                                    {{ form.sector }}
+                                    {% if form.sector.errors %}
+                                        <div class="text-danger">{{ form.sector.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Cell</label>
+                                    {{ form.cell }}
+                                    {% if form.cell.errors %}
+                                        <div class="text-danger">{{ form.cell.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Village</label>
+                                    {{ form.village }}
+                                    {% if form.village.errors %}
+                                        <div class="text-danger">{{ form.village.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <hr>
+                            <h5 class="mb-3">Next of KIN</h5>
+                            <div class="row g-3 custom-input mb-5">
+                                <div class="col-sm-6"> 
+                                    <label class="form-label">Relative Name</label>
+                                    {{ form.relative }}
+                                    {% if form.relative.errors %}
+                                        <div class="text-danger">{{ form.relative.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-6"> 
+                                    <label class="form-label">Relative Relationship</label>
+                                    {{ form.relationship }}
+                                    {% if form.relationship.errors %}
+                                        <div class="text-danger">{{ form.relationship.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <div class="text-end">
+                                        <button class="btn btn-primary me-3" type="submit">Add Patient</button>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
