@@ -5,14 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Mofi admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
-    <meta name="keywords"
-        content="admin template, Mofi admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="description" content="TeleHealth">
+    <meta name="keywords" content="TeleHealth">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
-    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
-    <title>TeleHealth - Register</title>
+    <link rel="icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
+    <title>TeleHealth - Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
@@ -34,22 +32,8 @@
                     <div>
                         <div>
                             <a class="logo" href="#">
-                                TeleHealth
+                                <img class="bg-img-cover bg-center" src="{% static 'images/login/1.jpg' %}"  alt="looginpage">
                             </a>
-                            {% if messages %}
-                                {% for message in messages %}
-                                    {% if message.tags == 'success' %}
-                                        <div class="alert alert-success">
-                                            {{ message }}
-                                        </div>
-                                    {% elif message.tags == 'error' %}
-                                        <div class="alert alert-danger">
-                                            {{ message }}
-                                        </div>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endif %}
-
                         </div>
                         <div class="login-main"> 
                             <form class="theme-form" method="POST">
@@ -149,6 +133,23 @@
             </div>
         </div>
     </div>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            {% if messages %}
+                {% for message in messages %}
+                    Swal.fire({
+                        icon: '{% if message.tags %}{{ message.tags }}{% endif %}',
+                        title: '{{ message }}',
+                        showConfirmButton: false,
+                        timer: 5000
+                    });
+                {% endfor %}
+            {% endif %}
+        });
+    </script>
 
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>

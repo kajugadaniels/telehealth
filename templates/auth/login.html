@@ -5,13 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Mofi admin is super flexible, powerful, clean &amp; modern responsive bootstrap 5 admin template with unlimited possibilities.">
-    <meta name="keywords"
-        content="admin template, Mofi admin template, dashboard template, flat admin template, responsive admin template, web app">
+    <meta name="description" content="TeleHealth">
+    <meta name="keywords" content="TeleHealth">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
-    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
     <title>TeleHealth - Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -37,7 +35,7 @@
                     <div>
                         <div>
                             <a class="logo text-start" href="#">
-                                TeleHealth
+                                <img src="{% static 'images/logo/logo.png' %}" alt="">
                             </a>
                         </div>
                         <div class="login-main">
@@ -70,14 +68,31 @@
                 </div>
             </div>
         </div>
-
-        <script src="{% static 'js/jquery.min.js' %}"></script>
-        <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static 'js/icons/feather-icon/feather.min.js' %}"></script>
-        <script src="{% static 'js/icons/feather-icon/feather-icon.js' %}"></script>
-        <script src="{% static 'js/config.js' %}"></script>
-        <script src="{% static 'js/script.js' %}"></script>
     </div>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            {% if messages %}
+                {% for message in messages %}
+                    Swal.fire({
+                        icon: '{% if message.tags %}{{ message.tags }}{% endif %}',
+                        title: '{{ message }}',
+                        showConfirmButton: false,
+                        timer: 5000
+                    });
+                {% endfor %}
+            {% endif %}
+        });
+    </script>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/icons/feather-icon/feather.min.js' %}"></script>
+    <script src="{% static 'js/icons/feather-icon/feather-icon.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+    <script src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>
