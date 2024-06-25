@@ -1,5 +1,6 @@
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
 from base.models import *
 
 @login_required
@@ -36,4 +37,9 @@ def editPatient(request, slug):
 
 @login_required
 def deletePatient(request, slug):
-    pass
+    if request.method == 'POST':
+        patient = get_object_or_404(Patient, slug=slug)
+        patient.delete()
+        messages.success(request, 'Patient deleted successfully!')
+
+    return redirect('base:getPatients')
