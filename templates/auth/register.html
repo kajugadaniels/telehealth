@@ -5,11 +5,11 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="TeleHealth">
-    <meta name="keywords" content="TeleHealth">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
-    <link rel="shortcut icon" href="{% static 'images/logo/favicon.png' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
     <title>TeleHealth - Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -25,114 +25,146 @@
 </head>
 
 <body>
-    <div class="container-fluid p-0"> 
-        <div class="row m-0">
-            <div class="col-12 p-0">    
-                <div class="login-card login-dark">
+    <form id="wizard-form" method="POST">
+        {% csrf_token %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 p-0">
                     <div>
-                        <div>
-                            <a class="logo" href="#">
-                                <img class="bg-img-cover bg-center" src="{% static 'images/login/1.jpg' %}"  alt="looginpage">
-                            </a>
-                        </div>
-                        <div class="login-main"> 
-                            <form class="theme-form" method="POST">
-                                {% csrf_token %}
-                                <h4>Create your account</h4>
-                                <p>Enter your personal details to create account</p>
-                                <div class="form-group">
-                                    <div class="row g-2">
-                                        <div class="col-12">
-                                            <label class="col-form-label pt-0">Name</label>
-                                            {{ form.name }}
-                                            {% if form.name.errors %}
-                                                <div class="text-danger">{{ form.name.errors }}</div>
-                                            {% endif %}
+                        <div class="theme-form">
+                            <div class="wizard-4" id="wizard">
+                                <ul>
+                                    <li>
+                                        <a class="logo text-start ps-0" href="#">
+                                            TeleHealth
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#step-1">
+                                            <h4>1</h4>
+                                            <h5>Create Your Account</h5>
+                                            <small>Provide your name, email, and phone number to get started.</small>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#step-2">
+                                            <h4>2</h4>
+                                            <h5>Verify Your Identity</h5>
+                                            <small>Enter your ID number, gender, and upload a profile picture.</small>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#step-3">
+                                            <h4>3</h4>
+                                            <h5>Assign Your Role</h5>
+                                            <small>Select your role and upload a profile image.</small>
+                                        </a>
+                                    </li>
+                                    <li class="pb-0">
+                                        <a href="#step-4">
+                                            <h4>4</h4>
+                                            <h5> Secure Your Account <i class="fa fa-thumbs-o-up"></i></h5>
+                                            <small>Set and confirm your password to complete the registration!</small>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <img src="{% static 'images/login/icon.png' %}" alt="looginpage">
+                                    </li>
+                                </ul>
+                                <div id="step-1" class="step-content">
+                                    <div class="wizard-title">
+                                        <h2>Create Your Account</h2>
+                                        <h5 class="text-muted mb-4">Provide your name, email, and phone number to get started.</h5>
+                                    </div>
+                                    <div class="login-main">
+                                        <div class="theme-form">
+                                            <div class="form-group mb-3">
+                                                <label>Name</label>
+                                                {{ form.name }}
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label>Email Address</label>
+                                                {{ form.email }}
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label>Phone Number</label>
+                                                {{ form.phone_number }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row g-2">
-                                        <div class="col-6">
-                                            <label class="col-form-label pt-0">Phone Number</label>
-                                            {{ form.phone_number }}
-                                            {% if form.phone_number.errors %}
-                                                <div class="text-danger">{{ form.phone_number.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="col-form-label pt-0">Email</label>
-                                            {{ form.email }}
-                                            {% if form.email.errors %}
-                                                <div class="text-danger">{{ form.email.errors }}</div>
-                                            {% endif %}
+                                <div id="step-2" class="step-content" style="display:none;">
+                                    <div class="wizard-title">
+                                        <h2>Verify Your Identity</h2>
+                                        <h5 class="text-muted mb-4">Enter your ID number and gender.</h5>
+                                    </div>
+                                    <div class="login-main">
+                                        <div class="theme-form">
+                                            <div class="form-group mb-3">
+                                                <label>ID Number</label>
+                                                {{ form.id_number }}
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label>Gender</label>
+                                                {{ form.gender }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row g-2">
-                                        <div class="col-6">
-                                            <label class="col-form-label pt-0">ID Number</label>
-                                            {{ form.id_number }}
-                                            {% if form.id_number.errors %}
-                                                <div class="text-danger">{{ form.id_number.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="col-form-label pt-0">Gender</label>
-                                            {{ form.gender }}
-                                            {% if form.gender.errors %}
-                                                <div class="text-danger">{{ form.gender.errors }}</div>
-                                            {% endif %}
+                                <div id="step-3" class="step-content" style="display:none;">
+                                    <div class="wizard-title">
+                                        <h2>Assign Your Role</h2>
+                                        <h5 class="text-muted mb-4">Select your role and upload a profile image.</h5>
+                                    </div>
+                                    <div class="login-main">
+                                        <div class="theme-form">
+                                            <div class="form-group mb-3">
+                                                <label>Role</label>
+                                                {{ form.role }}
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label>Image</label>
+                                                {{ form.image }}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row g-2">
-                                        <div class="col-6">
-                                            <label class="col-form-label pt-0">Image</label>
-                                            {{ form.image }}
-                                            {% if form.image.errors %}
-                                                <div class="text-danger">{{ form.image.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="col-form-label pt-0">Role</label>
-                                            {{ form.role }}
-                                            {% if form.role.errors %}
-                                                <div class="text-danger">{{ form.role.errors }}</div>
-                                            {% endif %}
+                                <div id="step-4" class="step-content" style="display:none;">
+                                    <div class="wizard-title">
+                                        <h2>Secure Your Account</h2>
+                                        <h5 class="text-muted mb-4">Set and confirm your password to complete the registration.</h5>
+                                    </div>
+                                    <div class="login-main">
+                                        <div class="theme-form">
+                                            <div class="form-group mb-3">
+                                                <label>Password</label>
+                                                <input type="password" name="password1" placeholder="Enter Password" class="form-control" required>
+                                                {% if form.password1.errors %}
+                                                    <div class="text-danger">{{ form.password1.errors }}</div>
+                                                {% endif %}
+                                            </div>
+                                            <div class="form-group mb-3">
+                                                <label>Password Confirmation</label>
+                                                <input type="password" name="password2" placeholder="Enter Password Confirmation" class="form-control" required>
+                                                {% if form.confirm_password2.errors %}
+                                                    <div class="text-danger">{{ form.confirm_password2.errors }}</div>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="row g-2">
-                                        <div class="col-6">
-                                            <label class="col-form-label pt-0">Password</label>
-                                            <input type="password" name="password1" placeholder="Enter Password" class="form-control">
-                                            {% if form.password1.errors %}
-                                                <div class="text-danger">{{ form.password1.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="col-form-label pt-0">Password Confirmation</label>
-                                            <input type="password" name="password2" placeholder="Enter Password Confirmation" class="form-control">
-                                            {% if form.confirm_password2.errors %}
-                                                <div class="text-danger">{{ form.confirm_password2.errors }}</div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
+                                <div class="action-bar">
+                                    <a href="#" class="btn btn-primary" id="prevBtn">Previous</a>
+                                    <a href="#" class="btn btn-primary" id="nextBtn">Next</a>
+                                    <button type="submit" class="btn btn-primary" id="finishBtn" style="display: none;">Create Account</button>
                                 </div>
-                                <div class="form-group mb-0">
-                                    <button class="btn btn-primary btn-block w-100" type="submit" style="height: 50px;">Create Account</button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -156,7 +188,71 @@
     <script src="{% static 'js/icons/feather-icon/feather.min.js' %}"></script>
     <script src="{% static 'js/icons/feather-icon/feather-icon.js' %}"></script>
     <script src="{% static 'js/config.js' %}"></script>
+    <script src="{% static 'js/form-wizard-five.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
+
+    <script>
+        $(document).ready(function() {
+            var currentStep = 1;
+            var totalSteps = 4;
+
+            function showStep(step) {
+                $('.step-content').hide();
+                $('#step-' + step).show();
+
+                if (step === 1) {
+                    $('#prevBtn').hide();
+                } else {
+                    $('#prevBtn').show();
+                }
+
+                if (step === totalSteps) {
+                    $('#nextBtn').hide();
+                    $('#finishBtn').show();
+                } else {
+                    $('#nextBtn').show();
+                    $('#finishBtn').hide();
+                }
+            }
+
+            function validateStep(step) {
+                var isValid = true;
+                $('#step-' + step + ' input, #step-' + step + ' select').each(function() {
+                    if (!this.checkValidity()) {
+                        isValid = false;
+                        $(this).addClass('is-invalid');
+                        if (!$(this).next('.invalid-feedback').length) {
+                            $(this).after('<div class="invalid-feedback">This field is required.</div>');
+                        }
+                    } else {
+                        $(this).removeClass('is-invalid');
+                        $(this).next('.invalid-feedback').remove();
+                    }
+                });
+                return isValid;
+            }
+
+            $('#nextBtn').click(function() {
+                if (validateStep(currentStep)) {
+                    if (currentStep < totalSteps) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+                }
+                return false;
+            });
+
+            $('#prevBtn').click(function() {
+                if (currentStep > 1) {
+                    currentStep--;
+                    showStep(currentStep);
+                }
+                return false;
+            });
+
+            showStep(currentStep);
+        });
+    </script>
 </body>
 
 </html>

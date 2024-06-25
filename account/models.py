@@ -48,7 +48,7 @@ class User(AbstractUser):
         verbose_name_plural = "Users"
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        self.username = slugify(self.name)
         super(User, self).save(*args, **kwargs)
 
     def __str__(self):
