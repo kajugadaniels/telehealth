@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     
     # Custom apps
     'account.apps.AccountConfig',
+    'base',
     
     # Third party
     'whitenoise.runserver_nostatic',

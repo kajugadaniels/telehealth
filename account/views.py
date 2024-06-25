@@ -1,6 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from account.forms import *
 
@@ -14,19 +13,19 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Login successful.')
-                return redirect('auth:dashboard')
+                return redirect('base:dashboard')
             else:
                 error_message = 'Invalid email or password'
                 for field, errors in form.errors.items():
                     error_message += f"{field}: {', '.join(errors)}. "
                 messages.error(request, error_message.strip())
-                return redirect('auth:dashboard')
+                return redirect('auth:login')
         else:
             error_message = 'Login failed. Please check your input.'
             for field, errors in form.errors.items():
                 error_message += f"{field}: {', '.join(errors)}. "
             messages.error(request, error_message.strip())
-            return redirect('auth:dashboard')
+            return redirect('auth:login')
     else:
         form = UserLoginForm()
 
@@ -68,7 +67,3 @@ def user_register(request):
 def user_logout(request):
     logout(request)
     return redirect('auth:login')
-
-@login_required
-def dashboard(request):
-    return render(request, 'auth/dashboard.html')
