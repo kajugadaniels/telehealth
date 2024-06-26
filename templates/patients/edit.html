@@ -1,0 +1,251 @@
+{% extends 'layouts/app.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .select-search {
+        position: relative;
+    }
+    .select-search input {
+        width: 100%;
+        padding: 0.5rem;
+        box-sizing: border-box;
+    }
+    .select-search ul {
+        position: absolute;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        background: #fff;
+        border: 1px solid #ddd;
+        z-index: 1000;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .select-search ul li {
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+    .select-search ul li:hover {
+        background: #f0f0f0;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="list-product-header">
+                        <div class="d-flex justify-content-between">
+                            <h4>Edit Patient</h4>
+                            <a class="btn btn-primary" href="{% url 'base:getPatients' %}"><i class="fa fa-eye"></i>View Patients</a>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form theme-form">
+                        <form class="price-wrapper" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row g-3 custom-input mb-5">
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Name</label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}
+                                        <div class="text-danger">{{ form.name.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">ID Number</label>
+                                    {{ form.id_number }}
+                                    {% if form.id_number.errors %}
+                                        <div class="text-danger">{{ form.id_number.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="form-label">Image</label>
+                                    {{ form.image }}
+                                    {% if form.image.errors %}
+                                        <div class="text-danger">{{ form.image.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row g-3 custom-input mb-5">
+                                <div class="col-sm-3"> 
+                                    <label class="form-label">Phone Number</label>
+                                    {{ form.phone_number }}
+                                    {% if form.phone_number.errors %}
+                                        <div class="text-danger">{{ form.phone_number.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-3"> 
+                                    <label class="form-label">DOB</label>
+                                    {{ form.dob }}
+                                    {% if form.dob.errors %}
+                                        <div class="text-danger">{{ form.dob.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-3"> 
+                                    <label class="form-label">Gender</label>
+                                    {{ form.gender }}
+                                    {% if form.gender.errors %}
+                                        <div class="text-danger">{{ form.gender.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-3">
+                                    <label class="form-label">Marital Status</label>
+                                    {{ form.marital_status }}
+                                    {% if form.marital_status.errors %}
+                                        <div class="text-danger">{{ form.marital_status.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row g-3 custom-input mb-5">
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Nationality</label>
+                                    <div id="nationality-container">
+                                        {{ form.nationality }}
+                                    </div>
+                                    {% if form.nationality.errors %}
+                                        <div class="text-danger">{{ form.nationality.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Province</label>
+                                    {{ form.province }}
+                                    {% if form.province.errors %}
+                                        <div class="text-danger">{{ form.province.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">District</label>
+                                    {{ form.district }}
+                                    {% if form.district.errors %}
+                                        <div class="text-danger">{{ form.district.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row g-3 custom-input mb-5">
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Sector</label>
+                                    {{ form.sector }}
+                                    {% if form.sector.errors %}
+                                        <div class="text-danger">{{ form.sector.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Cell</label>
+                                    {{ form.cell }}
+                                    {% if form.cell.errors %}
+                                        <div class="text-danger">{{ form.cell.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-4"> 
+                                    <label class="form-label">Village</label>
+                                    {{ form.village }}
+                                    {% if form.village.errors %}
+                                        <div class="text-danger">{{ form.village.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <hr>
+                            <h5 class="mb-3">Next of KIN</h5>
+                            <div class="row g-3 custom-input mb-5">
+                                <div class="col-sm-6">
+                                    <label class="form-label">Relative Name</label>
+                                    <div class="select-search">
+                                        <input type="hidden" id="relative-id" name="relative" value="{{ patient.relative.id }}">
+                                        <input type="text" id="relative-search" class="form-control" placeholder="Search relative..." value="{{ patient.relative.name }} ({{ patient.relative.mrn }}) ({{ patient.relative.id_number }})">
+                                        <ul id="relative-options" style="display: none;">
+                                            {% for relative in form.relative.field.queryset %}
+                                                <li data-value="{{ relative.pk }}">{{ relative.name }} ({{ relative.mrn }}) ({{ relative.id_number }})</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    {% if form.relative.errors %}
+                                        <div class="text-danger">{{ form.relative.errors }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label">Relative Relationship</label>
+                                    <div id="relationship-container">
+                                        {{ form.relationship }}
+                                    </div>
+                                    {% if form.relationship.errors %}
+                                        <div class="text-danger">{{ form.relationship.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <div class="text-end">
+                                        <button class="btn btn-primary me-3" type="submit">Update Patient</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Searchable relative field
+        var searchInput = document.getElementById('relative-search');
+        var hiddenInput = document.getElementById('relative-id');
+        var optionsList = document.getElementById('relative-options');
+
+        searchInput.addEventListener('input', function() {
+            var filter = searchInput.value.toLowerCase();
+            var options = optionsList.querySelectorAll('li');
+            optionsList.style.display = 'block';
+
+            options.forEach(function(option) {
+                if (option.textContent.toLowerCase().includes(filter)) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                }
+            });
+        });
+
+        optionsList.addEventListener('click', function(event) {
+            if (event.target.tagName === 'LI') {
+                var value = event.target.getAttribute('data-value');
+                var text = event.target.textContent;
+                hiddenInput.value = value;
+                searchInput.value = text;
+                optionsList.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!optionsList.contains(event.target) && event.target !== searchInput) {
+                optionsList.style.display = 'none';
+            }
+        });
+
+        // Nationality field change
+        var nationalitySelect = document.getElementById('id_nationality');
+        nationalitySelect.addEventListener('change', function() {
+            var nationalityContainer = document.getElementById('nationality-container');
+            if (nationalitySelect.value === 'Other') {
+                nationalityContainer.innerHTML = '<input type="text" id="id_nationality" name="nationality" class="form-control" placeholder="Enter your nationality">';
+            }
+        });
+
+        // Relationship field change
+        var relationshipSelect = document.getElementById('id_relationship');
+        relationshipSelect.addEventListener('change', function() {
+            var relationshipContainer = document.getElementById('relationship-container');
+            if (relationshipSelect.value === 'Other Family Member') {
+                relationshipContainer.innerHTML = '<input type="text" id="id_relationship" name="relationship" class="form-control" placeholder="Enter the relationship">';
+            }
+        });
+    });
+</script>
+
+{% endblock %}

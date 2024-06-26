@@ -58,7 +58,31 @@ def getPatient(request, slug):
 
 @login_required
 def editPatient(request, slug):
-    pass
+    patient = get_object_or_404(Patient, slug=slug)
+    if request.method == 'POST':
+        form = PatientForm(request.POST, request.FILES, instance=patient)
+        if form.is_valid():
+            try:
+                form.save()
+                messages.success(request, 'Patient has been updated successfully.')
+                return redirect('base:getPatients')
+            except Exception as e:
+                error_message = f'An error occurred while updating the patient: {str(e)}'
+                messages.error(request, error_message)
+        else:
+            error_message = 'Failed to update patient. '
+            for field, errors in form.errors.items():
+                error_message += f"{field}: {', '.join(errors)}. "
+            messages.error(request, error_message.strip())
+    else:
+        form = PatientForm(instance=patient)
+
+    context = {
+        'form': form,
+        'patient': patient,
+    }
+
+    return render(request, 'patients/edit.html', context)
 
 @login_required
 def deletePatient(request, slug):
