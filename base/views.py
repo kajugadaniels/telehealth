@@ -19,7 +19,6 @@ def getPatients(request):
     return render(request, 'patients/index.html', context)
 
 @login_required
-@login_required
 def addPatient(request):
     if request.method == 'POST':
         form = PatientForm(request.POST, request.FILES)
